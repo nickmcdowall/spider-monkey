@@ -3,7 +3,6 @@ Spring Boot web application running in a Docker container.
 
 ## Commands
 
-
 ### Run from IDE
 Run the Application.java class
 
@@ -11,16 +10,11 @@ Run the Application.java class
 * Build the latest image then run:
 ```
 mvn clean package docker:build && \
-docker run --rm -p 8089:8080 -ti nmcdowall/microservices/docker-maven-bootstrap
+docker run --rm -p 8080:8080 -ti nmcdowall/speckly
 ```
 
 ### View app in Browser
-* Navigate to [http:localhost:8089]
+* Navigate to [localhost:8080](http:localhost:8089)
 
-
-## TODO
-* Get maven filtering to work on the Dockerfile without breaking the template
-resolving (want to populate the jar name depending on project version, artifact etc.).
-May need to use maven assembly plugin
 
 

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.nick</groupId>
-    <artifactId>docker-maven-bootstrap</artifactId>
+    <artifactId>speckly</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <parent>
@@ -25,12 +25,12 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -38,7 +38,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
@@ -54,36 +53,29 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.4.11</version>
                 <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <dockerDirectory>target/docker</dockerDirectory>
                     <serverId>docker-hub</serverId>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <volumes>
+                        <volume>/tmp</volume>
+                    </volumes>
+                    <imageTags>
+                        <imageTag>${project.version}</imageTag>
+                        <imageTag>latest</imageTag>
+                    </imageTags>
+                    <baseImage>frolvlad/alpine-oraclejdk8:slim</baseImage>
+                    <runs>
+                        <run>sh -c 'touch /app/${project.build.finalName}.jar'</run>
+                    </runs>
+                    <entryPoint>[ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app/${project.build.finalName}.jar" ]</entryPoint>
                     <resources>
                         <resource>
-                            <targetPath>/</targetPath>
+                            <targetPath>/app/</targetPath>
                             <directory>${project.build.directory}</directory>
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
                 </configuration>
             </plugin>
-            <!-- Needed for interpolation of the Dockerfile -->
-<!--            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <outputDirectory>${basedir}/target/docker</outputDirectory>
-                    <resources>
-                        <resource>
-                            <directory>src/main/docker</directory>
-                            <includes>
-                                <include>Dockerfile</include>
-                            </includes>
-                            <filtering>true</filtering>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>-->
         </plugins>
     </build>
 
