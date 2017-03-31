@@ -1,4 +1,4 @@
-# Speckly
+# Spider Monkey
 Spring Boot web application running in a Docker container.
 
 ## Commands
@@ -10,7 +10,7 @@ Run the Application.java class
 * Builds and runs the latest image:
 ```
 mvn clean package docker:build && \
-docker run --rm -p 8080:8080 -ti nmcdowall/speckly
+docker run --rm -p 8080:8080 -ti nmcdowall/spider-monkey
 ```
 
 ### View app in Browser
