@@ -1,9 +1,8 @@
-package com.nick.intrastructure;
+package com.nick.domain;
 
 import com.kennycason.kumo.bg.CircleBackground;
 import com.kennycason.kumo.font.scale.SqrtFontScalar;
 import com.kennycason.kumo.palette.ColorPalette;
-import com.nick.domain.CloudMaker;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
