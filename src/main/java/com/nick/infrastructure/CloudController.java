@@ -4,6 +4,7 @@ import com.kennycason.kumo.bg.CircleBackground;
 import com.kennycason.kumo.font.scale.SqrtFontScalar;
 import com.kennycason.kumo.palette.ColorPalette;
 import com.nick.domain.CloudMaker;
+import com.nick.domain.GitHubSlurper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
+import java.util.List;
 
 import static com.kennycason.kumo.CollisionMode.PIXEL_PERFECT;
 import static com.nick.domain.ImmutableCloudOptions.cloudOptions;
@@ -21,14 +21,16 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @Controller
 public class CloudController {
 
+    public static final String PNG = "png";
+
     @RequestMapping(path = "/generate")
     public void generate(
-            @RequestParam(value = "url", required = false, defaultValue = "https://raw.githubusercontent.com/nickmcdowall/fitnesse/master/src/fitnesse/wiki/FileSystemPage.java") String url,
+            @RequestParam(value = "repo", required = false, defaultValue = "nickmcdowall/spider-monkey") String repoName,
             HttpServletResponse servletResponse) throws IOException {
 
         CloudMaker cloudMaker = new CloudMaker(
                 cloudOptions()
-                        .withFileFormat("png")
+                        .withFileFormat(PNG)
                         .withColorPalette(colourPalette())
                         .withCollisionMode(PIXEL_PERFECT)
                         .withBackground(new CircleBackground(400))
@@ -39,11 +41,11 @@ public class CloudController {
                         .build()
         );
 
-        try (InputStream inputStream = new URL(url).openStream()) {
-            servletResponse.setContentType(IMAGE_PNG_VALUE);
-            cloudMaker.write(inputStream, servletResponse.getOutputStream());
-        }
+        GitHubSlurper gitHubSlurper = new GitHubSlurper(repoName);
+        List<String> words = gitHubSlurper.slurp("src/main/java", ".java");
 
+        servletResponse.setContentType(IMAGE_PNG_VALUE);
+        cloudMaker.write(words, servletResponse.getOutputStream());
     }
 
     private ColorPalette colourPalette() {

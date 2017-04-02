@@ -5,8 +5,6 @@ import com.kennycason.kumo.WordFrequency;
 import com.kennycason.kumo.nlp.FrequencyAnalyzer;
 
 import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -19,14 +17,10 @@ public class CloudMaker {
         this.options = options;
     }
 
-    public void write(InputStream words, OutputStream outputStream) {
-        try {
-            List<WordFrequency> wordFrequencies = frequencyAnalyzer.load(words);
-            WordCloud wordCloud = buildCloudFrom(wordFrequencies);
-            wordCloud.writeToStream(options.fileFormat(), outputStream);
-        } catch (IOException e) {
-            throw new IllegalStateException("Failed to load words from input stream", e);
-        }
+    public void write(List<String> words, OutputStream outputStream) {
+        List<WordFrequency> wordFrequencies = frequencyAnalyzer.load(words);
+        WordCloud wordCloud = buildCloudFrom(wordFrequencies);
+        wordCloud.writeToStream(options.fileFormat(), outputStream);
     }
 
     private WordCloud buildCloudFrom(List<WordFrequency> wordFrequencies) {

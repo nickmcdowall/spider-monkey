@@ -7,10 +7,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.kennycason.kumo.CollisionMode.PIXEL_PERFECT;
 import static com.nick.domain.ImmutableCloudOptions.cloudOptions;
@@ -20,8 +20,7 @@ import static org.junit.Assert.assertThat;
 
 public class CloudMakerTest {
 
-    private static final String UTF_8 = "UTF-8";
-
+    public static final String PNG = "png";
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
@@ -30,7 +29,7 @@ public class CloudMakerTest {
 
     @Test
     public void writesWordsToFile() throws Exception {
-        InputStream words = new ByteArrayInputStream("Cat Dog Apple".getBytes(UTF_8));
+        List<String> words = Arrays.asList("Cat Dog", "Cat");
         File outputFile = temporaryFolder.newFile();
 
         cloudMaker.write(words, new FileOutputStream(outputFile));
@@ -46,7 +45,7 @@ public class CloudMakerTest {
                         .withBackground(new CircleBackground(60))
                         .withCollisionMode(PIXEL_PERFECT)
                         .withColorPalette(new ColorPalette(1, 2, 3))
-                        .withFileFormat("png")
+                        .withFileFormat(PNG)
                         .withPadding(2)
                         .withFontScalar(new SqrtFontScalar(10, 40))
                         .build()
