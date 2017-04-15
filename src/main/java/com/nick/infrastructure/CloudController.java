@@ -5,6 +5,8 @@ import com.kennycason.kumo.font.scale.SqrtFontScalar;
 import com.kennycason.kumo.palette.ColorPalette;
 import com.nick.domain.CloudMaker;
 import com.nick.domain.GitHubSlurper;
+import com.nick.domain.PathFormatter;
+import com.nick.domain.SpiderMonkey;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,28 +23,31 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @Controller
 public class CloudController {
 
-    public static final String PNG = "png";
+    private static final String PNG = "png";
 
     @RequestMapping(path = "/generate")
     public void generate(
             @RequestParam(value = "repo", required = false, defaultValue = "nickmcdowall/spider-monkey") String repoName,
             HttpServletResponse servletResponse) throws IOException {
 
-        CloudMaker cloudMaker = new CloudMaker(
-                cloudOptions()
-                        .withFileFormat(PNG)
-                        .withColorPalette(colourPalette())
-                        .withCollisionMode(PIXEL_PERFECT)
-                        .withBackground(new CircleBackground(400))
-                        .withHeight(800)
-                        .withWidth(800)
-                        .withPadding(2)
-                        .withFontScalar(new SqrtFontScalar(8, 60))
-                        .build()
+        CloudMaker cloudMaker = new CloudMaker(cloudOptions()
+                .withFileFormat(PNG)
+                .withColorPalette(colourPalette())
+                .withCollisionMode(PIXEL_PERFECT)
+                .withBackground(new CircleBackground(400))
+                .withHeight(800)
+                .withWidth(800)
+                .withPadding(2)
+                .withFontScalar(new SqrtFontScalar(8, 60))
+                .build()
         );
 
-        GitHubSlurper gitHubSlurper = new GitHubSlurper(repoName);
-        List<String> words = gitHubSlurper.slurp("src/main/java", ".java");
+        SpiderMonkey spiderMonkey = new SpiderMonkey(
+                new GitHubSlurper(repoName, "src/main/java", ".java"),
+                new PathFormatter()
+        );
+
+        List<String> words = spiderMonkey.generateWords();
 
         servletResponse.setContentType(IMAGE_PNG_VALUE);
         cloudMaker.write(words, servletResponse.getOutputStream());

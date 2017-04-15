@@ -3,8 +3,6 @@ package com.nick.domain;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GitHubSlurperIntegrationTest {
@@ -13,14 +11,12 @@ public class GitHubSlurperIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        gitHubSlurper = new GitHubSlurper("nickmcdowall/spider-monkey");
+        gitHubSlurper = new GitHubSlurper("nickmcdowall/spider-monkey", "src/main/java/", ".java");
     }
 
     @Test
     public void slurpSpiderMonekyRepositoryForCloudMakerWord() throws Exception {
-        List<String> strings = gitHubSlurper.slurp("src/main/java", ".java");
-
-        assertThat(strings).contains(" com nick domain CloudMaker");
+        assertThat(gitHubSlurper.slurpPaths()).contains("com/nick/domain/CloudMaker");
     }
 
 }
