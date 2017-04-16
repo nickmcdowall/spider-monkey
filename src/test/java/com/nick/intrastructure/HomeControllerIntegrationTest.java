@@ -13,15 +13,16 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class GenerateControllerIntegrationTest {
+public class HomeControllerIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Test
     public void exampleTest() {
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity("/generate", String.class);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity("/", String.class);
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
+        assertThat(responseEntity.getBody()).contains("<title>Spider Monkey</title>");
     }
 }

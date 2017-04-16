@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spider Monkey</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="bootstrap.min.css"/>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<h1>Spider Monkey</h1>
+
+<div class="well bs-component">
+    <form class="form-horizontal" action="#" th:action="@{/submit}" th:object="${userOptions}" method="post">
+        <fieldset>
+            <legend>Word Cloud Options</legend>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="repositoryName">Repository Name</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="repositoryName"
+                           placeholder="nickmcdowall/spider-monkey" th:field="*{repositoryName}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="sourceRoot">Source Root</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="sourceRoot" placeholder="src/main/java/"
+                           th:field="*{sourceRoot}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="sourceExtension">Source Extension</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="sourceExtension" placeholder=".java"
+                           th:field="*{sourceExtension}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</div>
+
+<div class="bs-component">
+    <div class="col-lg-12">
+        <div class="jumbotron text-center">
+            <img class="rounded mx-auto d-block" src="/cloud" alt="Word Cloud"/>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

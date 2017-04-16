@@ -18,27 +18,27 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
 
-public class CloudMakerTest {
+public class CloudWriterTest {
 
     public static final String PNG = "png";
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 
-    private CloudMaker cloudMaker = aCloudMaker();
+    private CloudWriter cloudWriter = aCloudMaker();
 
     @Test
     public void writesWordsToFile() throws Exception {
         List<String> words = Arrays.asList("Cat Dog", "Cat");
         File outputFile = temporaryFolder.newFile();
 
-        cloudMaker.write(words, new FileOutputStream(outputFile));
+        cloudWriter.write(words, new FileOutputStream(outputFile));
 
         assertThat("fileSize", outputFile.length(), greaterThan(0L));
     }
 
-    private CloudMaker aCloudMaker() {
-        return new CloudMaker(
+    private CloudWriter aCloudMaker() {
+        return new CloudWriter(
                 cloudOptions()
                         .withWidth(60)
                         .withHeight(60)

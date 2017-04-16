@@ -6,7 +6,6 @@ import static java.util.stream.Collectors.toList;
 
 public class SpiderMonkey {
 
-
     private PathSlurper slurper;
     private PathFormatter pathFormatter;
 

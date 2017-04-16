@@ -9,7 +9,7 @@ public class PathFormatterTest {
 
     @Test
     public void convertPathToWords() throws Exception {
-        String path = "com/nick/domain/CloudMaker";
+        String path = "com/nick/domain/CloudWriter";
 
         PathFormatter formatter = new PathFormatter();
 

@@ -3,59 +3,59 @@ package com.nick.infrastructure;
 import com.kennycason.kumo.bg.CircleBackground;
 import com.kennycason.kumo.font.scale.SqrtFontScalar;
 import com.kennycason.kumo.palette.ColorPalette;
-import com.nick.domain.CloudMaker;
-import com.nick.domain.GitHubSlurper;
-import com.nick.domain.PathFormatter;
-import com.nick.domain.SpiderMonkey;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.nick.domain.*;
+import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 import static com.kennycason.kumo.CollisionMode.PIXEL_PERFECT;
 import static com.nick.domain.ImmutableCloudOptions.cloudOptions;
-import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
-@Controller
-public class CloudController {
+@Component
+public class CloudGenerator {
 
     private static final String PNG = "png";
 
-    @RequestMapping(path = "/generate")
-    public void generate(
-            @RequestParam(value = "repo", required = false, defaultValue = "nickmcdowall/spider-monkey") String repoName,
-            HttpServletResponse servletResponse) throws IOException {
-
-        CloudMaker cloudMaker = new CloudMaker(cloudOptions()
+    public void writeImage(UserOptions userOptions, OutputStream outputStream) throws IOException {
+        CloudWriter cloudWriter = new CloudWriter(cloudOptions()
                 .withFileFormat(PNG)
                 .withColorPalette(colourPalette())
                 .withCollisionMode(PIXEL_PERFECT)
-                .withBackground(new CircleBackground(400))
-                .withHeight(800)
-                .withWidth(800)
+                .withBackground(new CircleBackground(200))
+                .withHeight(400)
+                .withWidth(400)
                 .withPadding(2)
-                .withFontScalar(new SqrtFontScalar(8, 60))
+                .withFontScalar(new SqrtFontScalar(6, 40))
                 .build()
         );
 
         SpiderMonkey spiderMonkey = new SpiderMonkey(
-                new GitHubSlurper(repoName, "src/main/java", ".java"),
+                new GitHubSlurper(
+                        userOptions.getRepositoryName(),
+                        userOptions.getSourceRoot(),
+                        userOptions.getSourceExtension()
+                ),
                 new PathFormatter()
         );
 
         List<String> words = spiderMonkey.generateWords();
 
-        servletResponse.setContentType(IMAGE_PNG_VALUE);
-        cloudMaker.write(words, servletResponse.getOutputStream());
+        cloudWriter.write(words, outputStream);
     }
+
 
     private ColorPalette colourPalette() {
         return new ColorPalette(
+                new Color(243,243,21),
                 new Color(0x32B41A),
+                new Color(252,90,184),
+                new Color(255,0,0),
+                new Color(253, 145, 13),
+                new Color(145, 13, 253),
+                new Color(91, 104, 109),
                 new Color(0x384CB4),
                 new Color(0x4055F1),
                 new Color(0x408DF1),

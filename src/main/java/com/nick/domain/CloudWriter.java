@@ -8,12 +8,12 @@ import java.awt.*;
 import java.io.OutputStream;
 import java.util.List;
 
-public class CloudMaker {
+public class CloudWriter {
 
     private final FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
     private final CloudOptions options;
 
-    public CloudMaker(CloudOptions options) {
+    public CloudWriter(CloudOptions options) {
         this.options = options;
     }
 
