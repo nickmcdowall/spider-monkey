@@ -13,6 +13,6 @@ public class PathFormatterTest {
 
         PathFormatter formatter = new PathFormatter();
 
-        assertThat(formatter.toWords(path)).isEqualTo("com nick domain Cloud Maker");
+        assertThat(formatter.toWords(path)).isEqualTo("com nick domain Cloud Writer");
     }
 }
