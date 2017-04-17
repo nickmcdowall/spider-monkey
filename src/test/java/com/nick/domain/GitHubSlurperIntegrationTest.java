@@ -11,7 +11,12 @@ public class GitHubSlurperIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        gitHubSlurper = new GitHubSlurper("nickmcdowall/spider-monkey", "src/main/java/", ".java");
+        UserOptions userOptions = new UserOptions();
+        userOptions.setRepositoryName("nickmcdowall/spider-monkey");
+        userOptions.setSourceRoot("src/main/java/");
+        userOptions.setSourceExtension(".java");
+
+        gitHubSlurper = new GitHubSlurper(userOptions);
     }
 
     @Test

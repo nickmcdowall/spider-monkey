@@ -16,7 +16,6 @@ public interface CloudOptions {
     int width();
     int height();
     int padding();
-    String fileFormat();
     CollisionMode collisionMode();
     Background background();
     ColorPalette colorPalette();

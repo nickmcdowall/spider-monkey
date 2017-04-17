@@ -17,26 +17,28 @@ public class GitHubSlurper implements PathSlurper {
     private static final String EMPTY = "";
 
     private final GHTree master;
-    private final String root;
-    private final String extension;
+    private UserOptions userOptions;
 
-    public GitHubSlurper(String repoName, String root, String extension) throws IOException {
-        this.root = root;
-        this.extension = extension;
+    public GitHubSlurper(UserOptions userOptions) {
+        this.userOptions = userOptions;
 
-        master = connectAnonymously()
-                .getRepository(repoName)
-                .getTreeRecursive(MASTER, 20);
+        try {
+            master = connectAnonymously()
+                    .getRepository(userOptions.getRepositoryName())
+                    .getTreeRecursive(MASTER, 20);
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to instantiate GitHubSlurper", e);
+        }
     }
 
     @Override
     public List<String> slurpPaths() {
         return master.getTree().stream()
-                .filter(startsWith(root))
-                .filter(endsWith(extension))
+                .filter(startsWith(userOptions.getSourceRoot()))
+                .filter(endsWith(userOptions.getSourceExtension()))
                 .map(GHTreeEntry::getPath)
-                .map(remove(root))
-                .map(remove(extension))
+                .map(remove(userOptions.getSourceRoot()))
+                .map(remove(userOptions.getSourceExtension()))
                 .collect(toList());
     }
 

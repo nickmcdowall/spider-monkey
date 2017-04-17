@@ -1,5 +1,6 @@
 package com.nick.infrastructure;
 
+import com.nick.domain.CloudGenerator;
 import com.nick.domain.UserOptions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
