@@ -10,15 +10,15 @@ import static org.apache.commons.lang.StringUtils.splitByCharacterTypeCamelCase;
 @Component
 public class PathFormatter {
 
-    public static final String SPACE = " ";
+    private static final String SPACE = " ";
 
-    public String toWords(String path) {
+    String toWords(String path) {
         return stream(path.split("/"))
-                .map(word -> splitCamcelCase(word))
+                .map(this::splitCamelCase)
                 .collect(joining(SPACE));
     }
 
-    private String splitCamcelCase(String input) {
+    private String splitCamelCase(String input) {
         return join(splitByCharacterTypeCamelCase(input), SPACE);
     }
 }
