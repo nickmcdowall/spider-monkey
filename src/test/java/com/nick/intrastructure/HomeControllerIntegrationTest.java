@@ -19,7 +19,7 @@ public class HomeControllerIntegrationTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void exampleTest() {
+    public void indexTest() {
         ResponseEntity<String> responseEntity = restTemplate.getForEntity("/", String.class);
 
         assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);

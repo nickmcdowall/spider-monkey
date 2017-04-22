@@ -2,32 +2,26 @@ package com.nick.infrastructure;
 
 import com.nick.domain.CloudGenerator;
 import com.nick.domain.UserOptions;
-import org.apache.commons.io.IOUtils;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-
-import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
+import java.io.OutputStream;
 
 @Controller
 public class HomeController {
 
-    private final File defaultImageFile = new ClassPathResource("static/monkey.png").getFile();
-    private final InputStream defaultImageStream = new FileInputStream(defaultImageFile);
+    private final FileStream defaultWordCloudImage;
+    private final CloudGenerator cloudGenerator;
 
-    private CloudGenerator cloudGenerator;
-    private UserOptions userOptions = UserOptions.UNSET;
+    private UserOptions userOptions;
 
-    HomeController(CloudGenerator cloudGenerator) throws IOException {
+    HomeController(CloudGenerator cloudGenerator, FileStream defaultWordCloudImage) throws IOException {
+        this.userOptions = UserOptions.UNSET;
         this.cloudGenerator = cloudGenerator;
+        this.defaultWordCloudImage = defaultWordCloudImage;
     }
 
     @GetMapping(path = "/")
@@ -43,11 +37,11 @@ public class HomeController {
     }
 
     @GetMapping(path = "/cloud")
-    public void cloudImage(HttpServletResponse response) throws IOException {
-        response.setContentType(IMAGE_PNG_VALUE);
+    public void cloudImage(OutputStream outputStream) throws IOException {
         if(userOptions.isUnset()) {
-            IOUtils.copy(defaultImageStream, response.getOutputStream());
+            defaultWordCloudImage.copyTo(outputStream);
+            return;
         }
-        cloudGenerator.writeImage(userOptions, response.getOutputStream());
+        cloudGenerator.writeImage(userOptions, outputStream);
     }
 }

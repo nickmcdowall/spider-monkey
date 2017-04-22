@@ -8,8 +8,10 @@ import com.kennycason.kumo.palette.ColorPalette;
 import com.nick.domain.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.function.Function;
 
 import static com.kennycason.kumo.CollisionMode.PIXEL_PERFECT;
@@ -39,6 +41,11 @@ public class AppConfiguration {
         wordCloud.setColorPalette(cloudOptions.colorPalette());
         wordCloud.setFontScalar(cloudOptions.fontScalar());
         return wordCloud;
+    }
+
+    @Bean
+    public FileStream defaultWordCloudImage() throws IOException {
+        return new FileStream(new ClassPathResource("static/monkey.png").getFile());
     }
 
     private CloudOptions wordCloudOptions() {

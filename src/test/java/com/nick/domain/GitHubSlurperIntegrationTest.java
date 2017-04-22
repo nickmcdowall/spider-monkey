@@ -21,7 +21,7 @@ public class GitHubSlurperIntegrationTest {
 
     @Test
     public void slurpSpiderMonekyRepositoryForCloudMakerWord() throws Exception {
-        assertThat(gitHubSlurper.slurpPaths()).contains("com/nick/domain/CloudWriter");
+        assertThat(gitHubSlurper.slurpPaths()).contains("com/nick/domain/SpiderMonkey");
     }
 
 }
