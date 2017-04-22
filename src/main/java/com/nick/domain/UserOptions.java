@@ -2,6 +2,9 @@ package com.nick.domain;
 
 public class UserOptions {
 
+
+    public static final UserOptions UNSET = new UserOptions();
+
     private String repoName = "nickmcdowall/spider-monkey";
     private String sourceRoot = "src/";
     private String sourceExtension = ".java";
@@ -29,4 +32,10 @@ public class UserOptions {
     public void setSourceExtension(String sourceExtension) {
         this.sourceExtension = sourceExtension;
     }
+
+    public boolean isUnset() {
+        return this.equals(UNSET);
+    }
+
+
 }
