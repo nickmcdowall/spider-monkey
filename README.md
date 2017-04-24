@@ -4,7 +4,7 @@
 # Spider Monkey  [![Build Status](https://travis-ci.org/nickmcdowall/spider-monkey.svg?branch=master)](https://travis-ci.org/nickmcdowall/spider-monkey)
 
 A web application that combines a word cloud generator with a github api library
-to allow to generate word clouds for any given repository.
+to allow you to generate word clouds for any given repository.
 
 
 ## Build
