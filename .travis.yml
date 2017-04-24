@@ -1,0 +1,14 @@
+language: java
+script:
+  - mvn clean package docker:build
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  -  mvn docker:push
+jdk:
+  - oraclejdk8
+
+services:
+  - docker
+
+notifications:
+  email:
+    - nicholasinengland@hotmail.com
