@@ -2,7 +2,7 @@ language: java
 script:
   - mvn clean package docker:build
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  -  mvn docker:push
+  - docker push $DOCKER_USERNAME/spider-monkey
 jdk:
   - oraclejdk8
 
