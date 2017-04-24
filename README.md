@@ -21,7 +21,7 @@ Run the ```com.nick.Application.java``` class
 ### Docker
 To run the latest image from DockerHub use:
 ```
-docker run --rm -p 8080:8080 -ti nmcdowall/spider-monkey
+docker run --rm -p 8080:8080 -ti nmcdowall/spider-monkey:latest
 ```
 
 ### View in Browser
