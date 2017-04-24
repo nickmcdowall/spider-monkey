@@ -1,4 +1,4 @@
-# Spider Monkey
+# Spider Monkey  [![Build Status](https://travis-ci.org/nickmcdowall/spider-monkey.svg?branch=master)](https://travis-ci.org/nickmcdowall/spider-monkey)
 Spring Boot web application running in a Docker container.
 
 ## Commands
