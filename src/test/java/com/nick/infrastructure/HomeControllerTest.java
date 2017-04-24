@@ -21,7 +21,7 @@ public class HomeControllerTest {
     private CloudGenerator cloudGenerator;
 
     @Mock
-    private FileStream defaultWordCloudImage;
+    private ClasspathContentStream defaultWordCloudImage;
 
     @Mock
     private OutputStream outputStream;

@@ -13,12 +13,12 @@ import java.io.OutputStream;
 @Controller
 public class HomeController {
 
-    private final FileStream defaultWordCloudImage;
+    private final ClasspathContentStream defaultWordCloudImage;
     private final CloudGenerator cloudGenerator;
 
     private UserOptions userOptions;
 
-    HomeController(CloudGenerator cloudGenerator, FileStream defaultWordCloudImage) throws IOException {
+    HomeController(CloudGenerator cloudGenerator, ClasspathContentStream defaultWordCloudImage) throws IOException {
         this.userOptions = UserOptions.UNSET;
         this.cloudGenerator = cloudGenerator;
         this.defaultWordCloudImage = defaultWordCloudImage;
